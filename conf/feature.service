@@ -1,0 +1,19 @@
+[Unit]
+Description=feature daemon
+ConditionPathExists=/opt/feature/conf/conf.toml
+
+[Service]
+Type=simple
+PIDFile=/var/run/ladder-scheduler.pid
+RemainAfterExit=no
+ExecStart=/opt/feature/feature -config /opt/feature/conf/conf.toml
+ExecStop=/bin/kill -s 15 $MAINPID
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=always
+KillSignal=SIGQUIT
+TimeoutStopSec=5
+KillMode=process
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

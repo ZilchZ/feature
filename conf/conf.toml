@@ -1,0 +1,26 @@
+title = "feature config"
+
+[Server]
+ip = "127.0.0.1"
+port = 8080
+pid = "/var/run/feature.pid"
+
+[LogConfig]
+errorLogPath = "/var/log/feature/error.log"
+accessLogPath = "/var/log/feature/access.log"
+level = "DEBUG"
+strErr = true
+
+[DataBase]
+driver   = "postgres"
+host     = "127.0.0.1"
+port     = 5432
+user     = "postgres"
+password = "123456"
+dbName   = "postgres"
+maxConn  = 3000
+
+[Scheduler]
+isScheduled = true
+crontab = "*/3 * * * * *"
+runImmediately = true

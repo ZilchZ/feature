@@ -1,0 +1,7 @@
+/.git/
+/.idea/
+/objs/
+/test
+/*.exe
+*.txt
+*.xml
