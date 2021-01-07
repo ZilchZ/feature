@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/feature/conf"
+	"github.com/feature/handler/middlewares"
 	"github.com/feature/sdk/log"
 	"github.com/gin-contrib/requestid"
 	"github.com/gin-gonic/gin"
@@ -23,7 +24,7 @@ type Server struct {
 func (s *Server) Init() {
 	gin.SetMode(gin.ReleaseMode)
 	engine := gin.New()
-	engine.Use(gin.Recovery(), requestid.New())
+	engine.Use(gin.Recovery(), requestid.New(), serverLog())
 	setupRoute(engine)
 	addr := fmt.Sprintf("%s:%d", cfg.Server.Host, cfg.Server.Port)
 	s.server = &http.Server{
@@ -58,4 +59,13 @@ func (s *Server) Stop() error {
 		}
 	}
 	return nil
+}
+
+func serverLog() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		start := time.Now()
+		c.Next()
+		middlewares.LogAccess(start, c)
+	}
+	
 }
